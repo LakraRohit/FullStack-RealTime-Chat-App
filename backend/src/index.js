@@ -34,7 +34,9 @@ const __dirname = path.resolve();
 app.use(express.json()); // using to extract Data out of body , before defining your router
 app.use(cookieParser());
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin: process.env.NODE_ENV === "production" 
+        ? process.env.FRONTEND_URL 
+        : "http://localhost:5173",
     credentials: true,
 }))
 
@@ -55,7 +57,7 @@ if (process.env.NODE_ENV === "production") {
 
 
 // Start the server
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
     console.log("server is running on PORT:" + PORT);
-    connectDB() // Establishes the MongoDB connection when the app starts
+    connectDB()
 });

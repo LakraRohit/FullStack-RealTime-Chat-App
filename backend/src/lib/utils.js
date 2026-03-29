@@ -9,11 +9,12 @@ export const generateToken = (userId, res) => {
 
     
     // here we have send a cooki to use in only HTTP
-    res.cookie("jwt",token,{
-        maxAge:7*24*60*60*1000, // MS
-        httpOnly: true, // prevent XSS ATTACKS 
-        sameSite:"strict", // CSRF attacks
-        secure: process.env.NODE_ENV  !=="development"
+    const isProduction = process.env.NODE_ENV === "production";
+    res.cookie("jwt", token, {
+        maxAge: 7 * 24 * 60 * 60 * 1000, // MS
+        httpOnly: true, // prevent XSS attacks
+        sameSite: isProduction ? "none" : "strict", // "none" required for cross-origin on Railway
+        secure: isProduction, // must be true when sameSite is "none"
     })
 
     return token
