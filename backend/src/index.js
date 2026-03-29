@@ -14,7 +14,7 @@ import path from "path";
 
 
 dotenv.config() // function To access the environment variable 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 //THIS  GONA READ FRON THE DATABASE
 const __dirname = path.resolve();
 
